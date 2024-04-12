@@ -1,0 +1,58 @@
+<!-- edit-appointment-dialog.component.html -->
+
+<h2 mat-dialog-title>Edit Appointment</h2>
+<mat-dialog-content>
+  <form [formGroup]="editForm" novalidate>
+    <!-- Appointment Date -->
+    <mat-form-field appearance="fill">
+      <mat-label>Appointment Date</mat-label>
+      <input matInput [matDatepicker]="appointmentDatePicker" formControlName="appointmentDate">
+      <mat-datepicker-toggle matSuffix [for]="appointmentDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #appointmentDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Employee Dropdown -->
+    <mat-form-field appearance="fill">
+      <mat-label>Employee</mat-label>
+      <mat-select formControlName="employeeId">
+        <mat-option *ngFor="let employee of employees" [value]="employee.id">
+          {{ employee.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Customer Dropdown -->
+    <mat-form-field appearance="fill">
+      <mat-label>Customer</mat-label>
+      <mat-select formControlName="customerId">
+        <mat-option *ngFor="let customer of customers" [value]="customer.id">
+          {{ customer.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Service Dropdown -->
+    <mat-form-field appearance="fill">
+      <mat-label>Service</mat-label>
+      <mat-select formControlName="serviceId">
+        <mat-option *ngFor="let service of services" [value]="service.id">
+          {{ service.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Appointment Status Dropdown -->
+    <mat-form-field appearance="fill">
+      <mat-label>Appointment Status</mat-label>
+      <mat-select formControlName="appointmentStatusId">
+        <mat-option *ngFor="let status of appointmentStatuses" [value]="status.id">
+          {{ status.status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button color="primary" (click)="onSave()" [disabled]="!editForm.valid">Save</button>
+</mat-dialog-actions>

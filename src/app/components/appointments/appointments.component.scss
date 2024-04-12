@@ -1,0 +1,29 @@
+/* appointments.component.scss */
+
+.mat-elevation-z8 {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th.mat-header-cell {
+    text-align: left;
+    font-weight: bold;
+    padding: 8px;
+    background-color: #f5f5f5; /* light grey background for header */
+    border-bottom: 2px solid #e0e0e0; /* light grey border for header cells */
+  }
+  
+  td.mat-cell {
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0; /* light grey border for cells */
+  }
+  
+  tr.mat-row:hover {
+    background-color: #e3f2fd; /* light blue background for hover effect */
+  }
+  

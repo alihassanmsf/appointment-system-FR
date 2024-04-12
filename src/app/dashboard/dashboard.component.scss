@@ -1,0 +1,44 @@
+/* src/app/dashboard/dashboard.component.scss */
+
+.dashboard-container {
+    margin: 16px;
+  }
+  
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  
+  .dashboard-card {
+    cursor: pointer; // Show that the card is clickable
+    transition: box-shadow 0.3s ease;
+  
+    &:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2); // Add a shadow effect on hover
+    }
+  }
+  
+  .quick-actions {
+    margin-bottom: 32px;
+  
+    button {
+      margin-right: 8px;
+    }
+  }
+  
+  .recent-activity {
+    margin-bottom: 32px;
+  
+    mat-list-item {
+      margin: 4px 0;
+    }
+  }
+  
+  .alerts {
+    .alert-card {
+      margin-bottom: 8px;
+    }
+  }
+  
