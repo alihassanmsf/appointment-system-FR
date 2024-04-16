@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Appointment } from '../models/appointment.model';
 import { AppointmentStatus } from '../models/appointment-status.model';
+import { Service } from '../models/service.model';
 
 @Injectable({
   providedIn: 'root',
@@ -90,8 +91,8 @@ export class ApiService {
     return this.http.post(`${this.BASE_URL}/services`, service);
   }
 
-  updateService(id: number, service: any): Observable<any> {
-    return this.http.put(`${this.BASE_URL}/services/${id}`, service);
+  updateService(service: Service): Observable<Service> {
+    return this.http.put<Service>(`${this.BASE_URL}/services/${service.id}`, service);
   }
 
   deleteService(id: number): Observable<any> {
