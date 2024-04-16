@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { EditAppointmentDialogComponent } from 'src/app/edit-appointment-dialog/edit-appointment-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-appointments',
@@ -37,9 +38,9 @@ export class AppointmentsComponent implements OnInit {
 
   constructor(
     private _service: ApiService,
-    private formBuilder: FormBuilder,
     private fb: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {
     this.appointmentForm = this.fb.group({
       appointmentDate: [null, Validators.required],
@@ -165,5 +166,9 @@ export class AppointmentsComponent implements OnInit {
       // After successful deletion, refresh the list
       this.appointments$ = this._service.getAppointments();
     });
+  }
+
+  goToDashboard(): void {
+    this.router.navigate(['/dashboard']); // Ensure you have the correct route
   }
 }
