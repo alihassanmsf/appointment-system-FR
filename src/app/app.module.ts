@@ -28,6 +28,7 @@ import { EditEmployeeDialogComponent } from './edit-employee-dialog/edit-employe
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { EditServiceDialogComponent } from './edit-service-dialog/edit-service-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import { MatListModule } from '@angular/material/list';
     EditCustomerDialogComponent,
     EditEmployeeDialogComponent,
     DashboardComponent,
+    EditServiceDialogComponent,
   ],
   imports: [
     BrowserModule,
