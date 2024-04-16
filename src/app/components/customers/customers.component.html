@@ -1,22 +1,23 @@
-<h2>Add Customer</h2>
-<form (ngSubmit)="addCustomer()">
-  <mat-form-field appearance="fill">
-    <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="customerName" name="customerName" required />
-  </mat-form-field>
+<div class="content">
+  <div class="header-section">
+    <h2>Add Customer</h2>
+    <button mat-stroked-button color="primary" (click)="goToDashboard()">Back to Dashboard</button>
+  </div>
+  <div class="customer-form">
+    <form [formGroup]="customerForm" (ngSubmit)="addCustomer()">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Enter Customer's Name" formControlName="name" />
+      </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Contact Number</mat-label>
-    <input
-      matInput
-      [(ngModel)]="customerContactNumber"
-      name="customerContactNumber"
-      required
-    />
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Contact Number</mat-label>
+        <input matInput placeholder="Enter Contact Number" formControlName="contactNumber" />
+      </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">Add Customer</button>
-</form>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!customerForm.valid">Add Customer</button>
+    </form>
+  </div>
 
 <div class="customer-table">
   <table mat-table [dataSource]="customers" class="mat-elevation-z8">
