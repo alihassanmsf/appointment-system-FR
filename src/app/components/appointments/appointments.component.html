@@ -1,104 +1,111 @@
 <!-- appointments.component.html -->
-<h2>Add New Appointment</h2>
-<form [formGroup]="appointmentForm" (ngSubmit)="addAppointment()" class="appointment-form">
-  <!-- Appointment Date -->
-  <mat-form-field appearance="fill">
-    <mat-label>Appointment Date</mat-label>
-    <input matInput [matDatepicker]="appointmentDatePicker" formControlName="appointmentDate">
-    <mat-datepicker-toggle matSuffix [for]="appointmentDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #appointmentDatePicker></mat-datepicker>
-  </mat-form-field>
+<div class="content">
+  <div class="header-section">
+    <h2>Add New Appointment</h2>
+    <button mat-stroked-button color="primary" (click)="goToDashboard()">Back to Dashboard</button>
+  </div>
 
-  <!-- Employee Dropdown -->
-  <mat-form-field appearance="fill">
-    <mat-label>Employee</mat-label>
-    <mat-select formControlName="employeeId">
-      <mat-option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <form [formGroup]="appointmentForm" (ngSubmit)="addAppointment()" class="appointment-form">
+    <!-- Appointment Date -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Appointment Date</mat-label>
+      <input matInput [matDatepicker]="appointmentDatePicker" formControlName="appointmentDate">
+      <mat-datepicker-toggle matSuffix [for]="appointmentDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #appointmentDatePicker></mat-datepicker>
+    </mat-form-field>
 
-  <!-- Customer Dropdown -->
-  <mat-form-field appearance="fill">
-    <mat-label>Customer</mat-label>
-    <mat-select formControlName="customerId">
-      <mat-option *ngFor="let customer of customers" [value]="customer.id">{{ customer.name }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <!-- Employee Dropdown -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Employee</mat-label>
+      <mat-select formControlName="employeeId">
+        <mat-option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <!-- Service Dropdown -->
-  <mat-form-field appearance="fill">
-    <mat-label>Service</mat-label>
-    <mat-select formControlName="serviceId">
-      <mat-option *ngFor="let service of services" [value]="service.id">{{ service.name }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <!-- Customer Dropdown -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Customer</mat-label>
+      <mat-select formControlName="customerId">
+        <mat-option *ngFor="let customer of customers" [value]="customer.id">{{ customer.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <!-- Appointment Status Dropdown -->
-  <mat-form-field appearance="fill">
-    <mat-label>Appointment Status</mat-label>
-    <mat-select formControlName="appointmentStatusId">
-      <mat-option *ngFor="let status of appointmentStatuses" [value]="status.id">{{ status.status }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <!-- Service Dropdown -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Service</mat-label>
+      <mat-select formControlName="serviceId">
+        <mat-option *ngFor="let service of services" [value]="service.id">{{ service.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <!-- Submit Button -->
-  <button mat-raised-button color="primary" type="submit" [disabled]="!appointmentForm.valid">Schedule</button>
-</form>
+    <!-- Appointment Status Dropdown -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Appointment Status</mat-label>
+      <mat-select formControlName="appointmentStatusId">
+        <mat-option *ngFor="let status of appointmentStatuses" [value]="status.id">{{ status.status }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-<h2>Appointments List</h2>
-<div class="appointments-table">
-  <!-- Appointments Table -->
-  <table mat-table [dataSource]="appointments$" matSort class="mat-elevation-z8">
-    <!-- Appointment Date Column -->
-    <ng-container matColumnDef="appointmentDate">
-      <th mat-header-cell *matHeaderCellDef> Date </th>
-      <td mat-cell *matCellDef="let element"> {{ element.appointmentDate | date:'fullDate' }} </td>
-    </ng-container>
+    <!-- Submit Button -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="!appointmentForm.valid">Schedule Appointment</button>
+  </form>
 
-    <!-- Employee Name Column -->
-    <ng-container matColumnDef="employee">
-      <th mat-header-cell *matHeaderCellDef> Employee </th>
-      <td mat-cell *matCellDef="let element"> {{ element.employee?.name }} </td>
-    </ng-container>
+  <h2>Appointments List</h2>
+  <div class="appointments-table">
+    <!-- Appointments Table -->
+    <table mat-table [dataSource]="appointments$" matSort class="mat-elevation-z8">
+      <!-- Appointment Date Column -->
+      <ng-container matColumnDef="appointmentDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+        <td mat-cell *matCellDef="let element"> {{ element.appointmentDate | date:'fullDate' }} </td>
+      </ng-container>
 
-    <!-- Customer Name Column -->
-    <ng-container matColumnDef="customer">
-      <th mat-header-cell *matHeaderCellDef> Customer </th>
-      <td mat-cell *matCellDef="let element"> {{ element.customer?.name }} </td>
-    </ng-container>
+      <!-- Employee Name Column -->
+      <ng-container matColumnDef="employee">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee </th>
+        <td mat-cell *matCellDef="let element"> {{ element.employee?.name }} </td>
+      </ng-container>
 
-    <!-- Service Name Column -->
-    <ng-container matColumnDef="service">
-      <th mat-header-cell *matHeaderCellDef> Service </th>
-      <td mat-cell *matCellDef="let element"> {{ element.service?.name }} </td>
-    </ng-container>
+      <!-- Customer Name Column -->
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+        <td mat-cell *matCellDef="let element"> {{ element.customer?.name }} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef> Price </th>
-      <td mat-cell *matCellDef="let element"> {{ element.service?.price }} </td>
-    </ng-container>
+      <!-- Service Name Column -->
+      <ng-container matColumnDef="service">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Service </th>
+        <td mat-cell *matCellDef="let element"> {{ element.service?.name }} </td>
+      </ng-container>
 
-    <!-- Appointment Status Column -->
-    <ng-container matColumnDef="appointmentStatus">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{ element.appointmentStatus?.status }} </td>
-    </ng-container>
+      <!-- Price Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+        <td mat-cell *matCellDef="let element"> {{ element.service?.price | currency }} </td>
+      </ng-container>
 
-    <!-- Actions Column -->
-<ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef> Actions </th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-icon-button color="accent" (click)="editAppointment(element)">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-icon-button color="warn" (click)="deleteAppointment(element.id)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+      <!-- Appointment Status Column -->
+      <ng-container matColumnDef="appointmentStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let element"> {{ element.appointmentStatus?.status }} </td>
+      </ng-container>
 
-    <!-- Table Row Definitions -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="accent" (click)="editAppointment(element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteAppointment(element.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Table Row Definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
 </div>
