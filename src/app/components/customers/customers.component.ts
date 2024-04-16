@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from 'src/app/services/api.service';
 import { EditCustomerDialogComponent } from 'src/app/edit-customer-dialog/edit-customer-dialog.component';
 import { Customer } from 'src/app/models/customer.model';
-import { ApiService } from 'src/app/services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -10,13 +12,21 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./customers.component.scss'],
 })
 export class CustomersComponent implements OnInit {
+  customerForm: FormGroup;
   customers: any[] = [];
-  customerName: string = '';
-  customerContactNumber: string = ''; 
   displayedColumns: string[] = ['name', 'contactNumber', 'actions'];
-  constructor(private _service: ApiService,public dialog: MatDialog) {}
 
-  public customersList:any[] = [];
+  constructor(
+    private _service: ApiService,
+    public dialog: MatDialog,
+    private _formBuilder: FormBuilder,
+    private router: Router
+  ) {
+    this.customerForm = this._formBuilder.group({
+      name: ['', Validators.required],
+      contactNumber: ['', [Validators.required, Validators.pattern(/^\+?[1-9]\d{1,14}$/)]], // Regex for international phone number
+    });
+  }
 
   ngOnInit(): void {
     this.loadCustomers();
@@ -24,29 +34,20 @@ export class CustomersComponent implements OnInit {
 
   loadCustomers(): void {
     this._service.getCustomers().subscribe({
-      next: (data) => {
-        console.log(data)
-        this.customers = data
-      },
-      error: (error) => {
-        console.error('There was an error!', error);
-      },
+      next: (data) => this.customers = data,
+      error: (error) => console.error('There was an error!', error)
     });
   }
 
   addCustomer(): void {
-    if (!this.customerName || !this.customerContactNumber) return;
+    if (this.customerForm.invalid) return;
 
-    const newCustomer = {
-      name: this.customerName,
-      contactNumber: this.customerContactNumber // Assuming your backend expects 'contactNumber'
-    };
+    const newCustomer = this.customerForm.value;
 
     this._service.createCustomer(newCustomer).subscribe({
       next: () => {
         this.loadCustomers();
-        this.customerName = ''; 
-        this.customerContactNumber = ''; 
+        this.customerForm.reset();
       },
       error: (error) => console.error('Error creating customer:', error)
     });
@@ -76,5 +77,9 @@ export class CustomersComponent implements OnInit {
       next: () => this.loadCustomers(),
       error: (error) => console.error('Error deleting customer:', error),
     });
+  }
+
+  goToDashboard(): void {
+    this.router.navigate(['/dashboard']); // Ensure the route is correct
   }
 }
