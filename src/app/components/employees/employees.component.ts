@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { EditEmployeeDialogComponent } from 'src/app/edit-employee-dialog/edit-employee-dialog.component';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -9,7 +11,13 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./employees.component.scss'],
 })
 export class EmployeesComponent implements OnInit {
-  constructor(private _service: ApiService, public dialog: MatDialog) {}
+  employeeForm: FormGroup; // Declare the FormGroup
+  constructor(private _service: ApiService, public dialog: MatDialog,private router: Router,private _formBuilder: FormBuilder ) {
+    this.employeeForm = this._formBuilder.group({
+      name: ['', Validators.required],
+      specialization: ['', Validators.required],
+    });
+  }
 
   public employeesList: any[] = [];
 
@@ -27,7 +35,10 @@ export class EmployeesComponent implements OnInit {
       this.employees = data;
     });
   }
-
+  // Method to navigate to the dashboard
+  goToDashboard(): void {
+    this.router.navigate(['/dashboard']); // Replace '/dashboard' with the path to your actual dashboard
+  }
   addEmployee(): void {
     if (!this.employeeName || !this.employeeSpecialization) return;
 
