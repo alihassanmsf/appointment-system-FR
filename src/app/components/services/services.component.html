@@ -1,1 +1,73 @@
-<p>services works!</p>
+<div class="content">
+    <div class="header-section">
+      <h2>Service Details</h2>
+      <button mat-stroked-button color="primary" (click)="goToDashboard()">Back to Dashboard</button>
+    </div>
+  
+    <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()" class="service-form">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" required>
+      </mat-form-field>
+  
+      <!-- <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" required></textarea>
+      </mat-form-field> -->
+  
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" formControlName="price" required>
+      </mat-form-field>
+  
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit">Save Service</button>
+        <button mat-raised-button color="warn" (click)="resetForm()" type="button">Cancel</button>
+      </div>
+    </form>
+  
+    <h2>Services List</h2>
+    <div class="services-table">
+        <!-- Services Table -->
+        <table mat-table [dataSource]="services" class="mat-elevation-z8">
+    
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let service"> {{service.name}} </td>
+          </ng-container>
+    
+          <!-- Description Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let service"> {{service.description}} </td>
+          </ng-container>
+    
+          <!-- Price Column -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let service"> {{service.price | currency}} </td>
+          </ng-container>
+    
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let service">
+              <button mat-icon-button color="accent" (click)="editService(service)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteService(service.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+    
+          <!-- Table Row Definitions -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let service; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    
+
+  </div>
+  
