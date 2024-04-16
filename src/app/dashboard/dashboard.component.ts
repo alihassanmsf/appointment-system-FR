@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
     { title: 'Total Employees', value: 0 },
     { title: 'Total Customers', value: 0 },
     { title: 'Total Appointments', value: 0 },
-    // ... add more stats as needed ...
+    { title: 'Total Services', value: 0 },
   ];
   recentActivities = [
     // Populate with actual recent activities
@@ -52,6 +52,10 @@ export class DashboardComponent implements OnInit {
       this.totalCustomers = appointments.length; // Update the totalCustomers property
       this.updateSummaryStat('Total Appointments', this.totalCustomers); // Update the summaryStats array
     });
+    this.apiService.getServices().subscribe((services) => {
+      this.totalCustomers = services.length; // Update the totalCustomers property
+      this.updateSummaryStat('Total Services', this.totalCustomers); // Update the summaryStats array
+    });
   }
 
   private updateSummaryStat(title: string, value: number): void {
@@ -70,6 +74,9 @@ navigate(stat: { title: string, value: number }): void {
         break;
       case 'Total Appointments':
         this.router.navigate(['appointments/schedule-appointment']);
+        break;
+      case 'Total Services':
+        this.router.navigate(['appointments/services']);
         break;
       // Add additional cases for other stats as needed
     }
